@@ -1,7 +1,5 @@
 package com.example.demo.services;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

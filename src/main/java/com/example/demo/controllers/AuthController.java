@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dtos.LoginDTO;
 import com.example.demo.entities.User;
 import com.example.demo.services.AuthService;
-import com.example.demo.services.UserService;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -25,7 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-	AuthService authService;
+	private AuthService authService;
 
 	public AuthController(AuthService authService) {
 		this.authService = authService;
@@ -35,7 +34,7 @@ public class AuthController {
 	public ResponseEntity<?> loginUser(@RequestBody LoginDTO usercred, HttpServletResponse response) {
 
 		try {
-			User user =authService.authenticate(usercred.getUsername(), usercred.getPassword());
+			User user = authService.authenticate(usercred.getUsername(), usercred.getPassword());
 			String token = authService.generateToken(user);
 			
 			//set it as cookie 
@@ -47,7 +46,7 @@ public class AuthController {
 			cookie.setDomain("localhost");
 			response.addCookie(cookie);
 			
-			response.setHeader("set-cookie",
+			response.addHeader("set-cookie",
 					String.format("authToken=%s; HttpOnly; Path=/; Max-Age=3600; SameSite=None",token));
 
 			Map<String, Object> responseBody = new HashMap<>();
@@ -60,4 +59,25 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error",e.getMessage()));
 		}
 	}
+	@PostMapping("/logout")
+    public ResponseEntity<Map<String, String>> logout(HttpServletRequest request,HttpServletResponse response) {
+        try {
+        	User user=(User) request.getAttribute("authenticatedUser");
+            authService.logout(user);
+            
+            Cookie cookie = new Cookie("authToken", null);
+            cookie.setHttpOnly(true);
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("message", "Logout successful");
+            
+            return ResponseEntity.ok(responseBody);
+        } catch (RuntimeException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Logout failed");
+            return ResponseEntity.status(500).body(errorResponse);
+        }
+    }
 }
