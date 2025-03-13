@@ -40,7 +40,7 @@ public class AuthService {
 	}
 
 	public User authenticate(String username, String password) {
-		User user = userRepository.findByUsername(username) .orElseThrow(() -> new RuntimeException("Invalid username or password"));
+		User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Invalid username or password"));
 		if  (!passwordEncoder.matches(password, user.getPassword())) {
 			throw new RuntimeException("Invalid username or password");
 		}
@@ -71,7 +71,7 @@ public class AuthService {
 	}
 
 	public String generateNewToken(User user) {
-		String token = Jwts.builder()
+		return Jwts.builder()
 				.setSubject(user.getUsername())
 				.claim("role", user.getRole().name())
 				.setIssuedAt(new Date())
@@ -79,7 +79,7 @@ public class AuthService {
 				.signWith(SIGNING_KEY, SignatureAlgorithm.HS512)
 				.compact();
 
-		return token;
+
 	}
 
 
@@ -122,6 +122,13 @@ public class AuthService {
 	}
 
 	public void logout(User user) { 
-		jwtTokenRepository.deleteByUserId(user.getUserId());
+		int userId = user.getUserId();
+
+		JWTToken token = jwtTokenRepository.findByUserId(userId);
+
+		if(token!=null) {
+			jwtTokenRepository.deleteByUserId(userId);
+
+		}
 	}
 }
