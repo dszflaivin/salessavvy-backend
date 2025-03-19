@@ -95,13 +95,14 @@ public class AuthenticationFilter implements Filter {
 		Role role = authenticatedUser.getRole(); 
 		logger.info("Authenticated User: {}, Role: {}", authenticatedUser.getUsername(), role); 
 		
+				
 		// Role-based access control 
 		if (requestURI.startsWith("/admin/") && role != Role.ADMIN) { 
 			sendErrorResponse(httpResponse, HttpServletResponse.SC_FORBIDDEN, "Forbidden: Admin access required"); 
 			return;
 		} 
 		
-		if (requestURI.startsWith("/api/") && role != Role.CUSTOMER) { 
+		if (requestURI.startsWith("/api/") && !requestURI.equals("/api/auth/logout") && role != Role.CUSTOMER) { 
 			sendErrorResponse(httpResponse, HttpServletResponse.SC_FORBIDDEN, "Forbidden: Customer access required"); 
 			return; 
 		} 
