@@ -20,5 +20,4 @@ public class SalesSavvyApplication {
 
 		SpringApplication.run(SalesSavvyApplication.class, args);
 	}
-
 }
