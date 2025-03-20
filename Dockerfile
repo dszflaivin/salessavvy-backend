@@ -8,7 +8,10 @@ WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
-# Build the JAR during the build process
+# Grant execute permission to Maven wrapper
+RUN chmod +x ./mvnw
+
+# Build the JAR during the Docker build process
 RUN ./mvnw clean package -DskipTests
 
 # Copy the generated JAR to the container
