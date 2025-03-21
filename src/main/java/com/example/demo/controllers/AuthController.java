@@ -22,9 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = {"Authorization", "Cache-Control", "Content-Type", "X-Requested-With", "Accept"},
-methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS}
-)
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/api/auth")
 public class AuthController {
 
