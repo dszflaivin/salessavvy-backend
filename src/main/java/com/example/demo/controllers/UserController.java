@@ -16,7 +16,7 @@ import com.example.demo.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+//@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/api/users")
 public class UserController {
 	private UserService userService;

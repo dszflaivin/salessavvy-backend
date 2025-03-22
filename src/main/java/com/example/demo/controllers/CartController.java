@@ -21,7 +21,7 @@ import com.example.demo.services.CartItemService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@CrossOrigin(origins="http://localhost:5173", allowCredentials="true")
+//@CrossOrigin(origins="http://localhost:5173", allowCredentials="true")
 @RestController
 @RequestMapping("/api/cart")
 public class CartController {

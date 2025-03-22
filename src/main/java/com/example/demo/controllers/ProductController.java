@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins="http://localhost:5173", allowCredentials="true")
+//@CrossOrigin(origins="http://localhost:5173", allowCredentials="true")
 public class ProductController {
 
 	@Autowired
