@@ -17,9 +17,7 @@ public class CorsConfig {
 
         // ✅ Allowed Origins (Adjust for Hosted Frontend)
         config.setAllowedOrigins(Arrays.asList(
-                "http://localhost:5173",  // Vite Frontend during development
-                "https://salessavvy-frontend.vercel.app"  // Hosted Frontend
-        ));
+                "http://localhost:5173"));
 
         // ✅ Allowed HTTP Methods
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
@@ -34,7 +32,7 @@ public class CorsConfig {
         ));
 
         // ✅ Exposed Headers (if needed)
-        config.setExposedHeaders(Arrays.asList("Authorization"));
+        config.setExposedHeaders(Arrays.asList("Authorization","Set-Cookie"));
 
         // ✅ Allow Cookies & Credentials
         config.setAllowCredentials(true);
