@@ -17,7 +17,7 @@ public class CorsConfig {
 
         // ✅ Allowed Origins (Adjust for Hosted Frontend)
         config.setAllowedOrigins(Arrays.asList(
-                "http://localhost:5173"));
+                "http://localhost:5173","https://salessavvy-frontend.vercel.app"));
 
         // ✅ Allowed HTTP Methods
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));

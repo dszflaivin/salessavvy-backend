@@ -45,7 +45,7 @@ public class AuthController {
 			cookie.setSecure(true);
 			cookie.setPath("/");
 			cookie.setMaxAge(3600);
-			cookie.setDomain("localhost");
+			cookie.setDomain("salessavvy-frontend.vercel.app");
 
 			response.addCookie(cookie);
 			
