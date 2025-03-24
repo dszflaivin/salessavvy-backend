@@ -44,6 +44,10 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
+        
+        System.out.println(" CORS Config Initialized");
+        System.out.println("✅ CORS Filter Applied with Origin: " + config.getAllowedOrigins());
+
         return new CorsFilter(source);
     }
 }
