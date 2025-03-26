@@ -17,7 +17,8 @@ public interface OrderRepository extends JpaRepository<Order, String>{
 	List<Order> findAllByStatus(OrderStatus status);
 
 	// Custom query methods can be added here if needed
-	@Query("SELECT o FROM Order o WHERE FUNCTION('MONTH', o.createdAt) = :month AND FUNCTION('YEAR', o.createdAt) = :year AND o.status = 'SUCCESS'")
+//	@Query("SELECT o FROM Order o WHERE FUNCTION('MONTH', o.createdAt) = :month AND FUNCTION('YEAR', o.createdAt) = :year AND o.status = 'SUCCESS'")
+	@Query("SELECT o FROM Order o WHERE MONTH(o.createdAt) = :month AND YEAR(o.createdAt) = :year AND o.status = 'SUCCESS'")
 	List<Order> findSuccessfulOrdersByMonthAndYear(int month, int year);
 
 
