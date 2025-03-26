@@ -32,7 +32,11 @@ public class AuthenticationFilter implements Filter {
 	private final AuthService authService;
 	private final UserRepository userRepository;
 
-	private static final String ALLOWED_ORIGIN = "http://localhost:5173";
+//	private static final String ALLOWED_ORIGIN = "http://localhost:5173";
+	private static final String[] ALLOWED_ORIGINS = {
+		    "http://localhost:5173",
+		    "https://salessavvy-frontend.vercel.app"
+		};
 
 	private static final String[] UNAUTHENTICATED_PATHS = {
 			"/api/users/register",
@@ -70,7 +74,7 @@ public class AuthenticationFilter implements Filter {
 		}
 
 		if (httpRequest.getMethod().equalsIgnoreCase("OPTIONS")) { 
-			setCORSHeaders(httpResponse); 
+			setCORSHeaders(httpResponse, httpRequest); 
 			return;
 		}
 
@@ -112,8 +116,12 @@ public class AuthenticationFilter implements Filter {
 		chain.doFilter(request, response); 
 	}
 
-	private void setCORSHeaders(HttpServletResponse response) {
-		response.setHeader("Access-Control-Allow-Origin", ALLOWED_ORIGIN); 
+	private void setCORSHeaders(HttpServletResponse response, HttpServletRequest request) {
+//		response.setHeader("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
+		String origin = request.getHeader("Origin");
+	    if (Arrays.asList(ALLOWED_ORIGINS).contains(origin)) {
+	        response.setHeader("Access-Control-Allow-Origin", origin);
+	    }
 		response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS"); 
 		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); 
 		response.setHeader("Access-Control-Allow-Credentials", "true"); 
