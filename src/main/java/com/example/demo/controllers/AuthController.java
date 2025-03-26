@@ -46,7 +46,8 @@ public class AuthController {
 			cookie.setPath("/");
 			cookie.setMaxAge(3600);
 //			cookie.setDomain("salessavvy-backend-z6no.onrender.com");
-
+			cookie.setDomain("localhost");
+			
 			response.addCookie(cookie);
 			
 			response.addHeader("Set-Cookie",
